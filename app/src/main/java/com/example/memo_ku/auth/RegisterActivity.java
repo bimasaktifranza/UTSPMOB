@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.memo_ku.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -58,9 +60,22 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth.createUserWithEmailAndPassword(email, pass)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        Toast.makeText(this, "Registrasi berhasil! Silakan login", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(this, LoginActivity.class));
-                        finish();
+                        String uid = mAuth.getCurrentUser().getUid();
+                        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(uid);
+
+                        // Simpan email dan role ke Realtime Database
+                        User user = new User(email, "user");
+
+                        userRef.setValue(user)
+                                .addOnCompleteListener(dbTask -> {
+                                    if (dbTask.isSuccessful()) {
+                                        Toast.makeText(this, "Registrasi berhasil! Silakan login", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(this, LoginActivity.class));
+                                        finish();
+                                    } else {
+                                        Toast.makeText(this, "Gagal simpan data: " + dbTask.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                     } else {
                         Toast.makeText(this, "Gagal: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }

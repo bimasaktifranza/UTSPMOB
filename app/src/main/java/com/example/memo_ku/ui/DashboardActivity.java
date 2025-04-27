@@ -4,39 +4,38 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-
 import com.example.memo_ku.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity {
+public class DashboardActivity extends AppCompatActivity {
 
-    BottomNavigationView bottomNav;
+    BottomNavigationView bottomNavigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_dashboard);
 
-        bottomNav = findViewById(R.id.bottom_navigation);
-
-        // Default tampilkan HomeFragment (berisi tombol-tombol lama kamu)
+        bottomNavigation = findViewById(R.id.bottom_navigation);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container_fragment, new HomeContainerFragment())
-                .commit();
+                .replace(R.id.container_fragment, new HomeFragment()).commit();
 
-        bottomNav.setOnItemSelectedListener(item -> {
+        bottomNavigation.setOnItemSelectedListener(item -> {
             Fragment selectedFragment = null;
+
             if (item.getItemId() == R.id.nav_home) {
-                selectedFragment = new HomeContainerFragment();
+                selectedFragment = new HomeFragment();
             } else if (item.getItemId() == R.id.nav_profile) {
                 selectedFragment = new ProfileFragment();
             }
 
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container_fragment, selectedFragment)
-                    .commit();
-
-            return true;
+            if (selectedFragment != null) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container_fragment, selectedFragment)
+                        .commit();
+                return true;
+            }
+            return false;
         });
     }
 }

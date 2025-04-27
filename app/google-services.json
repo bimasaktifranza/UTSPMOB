@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "105950170216",
-    "project_id": "memo-ku",
-    "storage_bucket": "memo-ku.firebasestorage.app"
+    "project_number": "722301310798",
+    "project_id": "uts-pb-bima",
+    "storage_bucket": "uts-pb-bima.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:105950170216:android:a27d717ae2b742f2283fdd",
+        "mobilesdk_app_id": "1:722301310798:android:5c3540182d063e07f9701f",
         "android_client_info": {
           "package_name": "com.example.memo_ku"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCb6dVipBQYmDq7s5RLyCDOxQ6zkfmcLhU"
+          "current_key": "AIzaSyCNOLqBkl6n_DHpS1-_mo3TZTMrCwTt0Cc"
         }
       ],
       "services": {

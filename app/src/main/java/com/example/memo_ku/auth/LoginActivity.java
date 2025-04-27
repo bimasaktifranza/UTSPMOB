@@ -1,16 +1,18 @@
 package com.example.memo_ku.auth;
 
 import android.os.Bundle;
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
 import com.example.memo_ku.R;
 import com.example.memo_ku.ui.MainActivity;
 import com.example.memo_ku.utils.SharedPrefHelper;
@@ -40,11 +42,9 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(v -> loginUser());
 
         btnToRegister.setOnClickListener(v -> {
-            startActivity(new Intent(this, RegisterActivity.class));
-            finish();
+            startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
         });
 
-        // Menambahkan ViewCompat hanya jika root view ada
         EdgeToEdge.enable(this);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -66,11 +66,10 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         pref.setLogin(true);
-                        Toast.makeText(this, "Session saved: " + pref.isLoggedIn(), Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(this, MainActivity.class));
                         finish();
                     } else {
-                        Toast.makeText(this, "Login gagal" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Login gagal: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
